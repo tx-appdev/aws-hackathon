@@ -1,4 +1,4 @@
-# vct-hackathon
+# VCT Hackathon 2024
 
 Temporary README.md file with directions for the project.
 
