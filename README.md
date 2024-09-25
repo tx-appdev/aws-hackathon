@@ -4,7 +4,7 @@ Temporary README.md file with directions for the project.
 
 ## Downloads
 
-- Git: https://git-scm.com/downloads (make sure to select VSCode as default code editor)
+- Git: https://git-scm.com/downloads (select VSCode as default code editor)
 - Node.js: https://nodejs.org/en (make sure you have **node v20.17.0 installed**)
 - NVM: https://github.com/nvm-sh/nvm (optional, but good to have in case of different node versions)
 - Python: https://www.python.org/downloads/
