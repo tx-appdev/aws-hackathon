@@ -1,0 +1,23 @@
+/* styles/intro.css */
+.intro-page {
+    padding: 50px;
+    text-align: center;
+    color: white;
+    background-color: rgb(0, 0, 0);
+  }
+  
+  .intro-page h1 {
+    font-size: 3rem;
+  }
+  
+  .intro-page p {
+    font-size: 1.5rem;
+  }
+
+.title {
+    padding: 100px;
+}
+
+.body {
+  height: 1000px;
+}
