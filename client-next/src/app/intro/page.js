@@ -1,20 +1,13 @@
-import SlidingCardList from '../components/SlidingCardList';
-import SlidingCardList2 from '../components/SlidingCardList2';
-import './intro.css';
+import Link from 'next/link';
 
-export default function IntroPage() {
+export default function HomePage() {
   return (
-    <section className="intro-page">
-      <div className="title">
-        <h1>VALORANT Esports Manager</h1>
-        <p>Build the best VALORANT team with AI-assisted analysis and scouting</p>
-      </div>
-      <SlidingCardList />
-      <SlidingCardList2 />
-      <SlidingCardList />
-      <div className="body">
-
-      </div>
+    <section>
+      <h1>Welcome to the Esports Manager</h1>
+      <p>Your AI-powered assistant for VALORANT esports team building and scouting.</p>
+      <Link href="/intro">
+        <button>Get Started</button>
+      </Link>
     </section>
   );
 }
