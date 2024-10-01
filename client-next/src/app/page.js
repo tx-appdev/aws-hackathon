@@ -1,8 +1,8 @@
 import SlidingCardList from './components/SlidingCardList';
 import SlidingCardList2 from './components/SlidingCardList2';
-import './intro.css';
+import './styles.css';
 
-export default function IntroPage() {
+export default function Home() {
   return (
     <section className="intro-page">
       <div className="title">
