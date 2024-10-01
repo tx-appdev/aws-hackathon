@@ -1,10 +1,12 @@
 import SlidingCardList from './components/SlidingCardList';
 import SlidingCardList2 from './components/SlidingCardList2';
+import BackgroundVideo from './components/BackgroundVideo';
 import './styles.css';
 
-export default function Home() {
+export default function HomePage() {
   return (
     <section className="intro-page">
+      <BackgroundVideo />
       <div className="title">
         <h1>VALORANT Esports Manager</h1>
         <p>Build the best VALORANT team with AI-assisted analysis and scouting</p>

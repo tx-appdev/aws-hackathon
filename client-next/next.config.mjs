@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
+import withVideos from 'next-videos';
+
 const nextConfig = {
     trailingSlash: true,
 };
 
-export default nextConfig;
+const config = withVideos({
+    ...nextConfig,
+});
+
+export default config;
