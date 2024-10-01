@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'VAL';
-    src: URL('Valorant Font.ttf') format('truetype');
+    src: URL('./fonts/Valorant\ Font.ttf') format('truetype');
   }
 
 body {
