@@ -1,0 +1,47 @@
+/* styles/slidingCards.css */
+.sliding-card-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px
+  }
+  
+  .sliding-card-list {
+    display: flex;
+    gap: 20px; /* Space between cards */
+    transition: transform 0.1s linear; /* Smooth transition when cards are moved */
+  }
+  
+  .sliding-card {
+    min-width: 300px;
+    height: 60px;
+    background-color: #151515;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: color .03s ease, box-shadow 0.3s linear, transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+   .sliding-card h3 {
+    padding-top: 20px;
+    font-weight: normal;
+    font-family: VAL;
+    font-size: 16px;
+    margin: 5px 0;
+    color: white;
+  }
+    
+  .sliding-card:hover {
+    box-shadow: 0 0 4px #bd3944;
+    transform: scale(1.05);
+    outline:#bd3944;
+    color: #bd3944;
+  }
+
+  .sliding-card:hover h3 {
+    color: #bd3944;
+  }
+  

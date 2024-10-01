@@ -1,0 +1,32 @@
+/* styles/intro.css */
+
+.video-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 0;
+  padding: 200px 0;
+  position: absolute;
+}
+
+.intro-page {
+  padding: 50px;
+  text-align: center;
+}
+  
+.intro-page h1 {
+  font-size: 3rem;
+}
+  
+.intro-page p {
+  font-size: 1.5rem;
+}
+
+.title {
+  padding: 100px;
+}
+
+.body {
+  height: 1000px;
+}
