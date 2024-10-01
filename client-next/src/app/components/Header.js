@@ -8,7 +8,7 @@ export default function Header() {
         <h1>Esports Manager</h1>
         <nav>
           <Link href="/" className="nav-link">Home</Link>
-          <Link href="/intro" className="nav-link">Intro</Link>
+          <Link href="/data" className="nav-link">Data</Link>
         </nav>
       </div>
     </header>
