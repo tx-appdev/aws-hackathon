@@ -31,12 +31,17 @@
     font-family: VAL;
     font-size: 16px;
     margin: 5px 0;
+    color: white;
   }
     
   .sliding-card:hover {
-    box-shadow: 0 0 2px #bd3944;
+    box-shadow: 0 0 4px #bd3944;
     transform: scale(1.05);
     outline:#bd3944;
-    color: #bd3944
+    color: #bd3944;
+  }
+
+  .sliding-card:hover h3 {
+    color: #bd3944;
   }
   
