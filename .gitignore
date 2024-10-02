@@ -43,5 +43,3 @@ next-env.d.ts
 # python virtual environment
 .venv/
 backend/.env
-=======
-.DS_Store
