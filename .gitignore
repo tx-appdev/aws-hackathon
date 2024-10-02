@@ -1,4 +1,3 @@
-<<<<<<< Python-Startup
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -11,7 +10,7 @@
 /coverage
 
 # next.js
-/.next/
+client-next/.next/
 /out/
 
 # production
@@ -46,4 +45,3 @@ next-env.d.ts
 backend/.env
 =======
 .DS_Store
->>>>>>> main
