@@ -1,0 +1,13 @@
+.video-wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    position: absolute;
+    z-index: -1;
+}
+
+.video-wrapper video {
+    height: 105vh;
+    padding: 0px;
+    filter:brightness(50%);
+}
