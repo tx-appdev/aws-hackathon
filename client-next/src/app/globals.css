@@ -3,6 +3,16 @@
     src: URL('./fonts/Valorant Font.ttf') format('truetype');
   }
 
+@font-face {
+    font-family: 'Satoshi';
+    src: URL('./fonts/Satoshi-Variable.ttf') format('truetype');
+  }
+
+@font-face {
+    font-family: 'Satoshi-Italic';
+    src: URL('./fonts/Satoshi-VariableItalic.ttf') format('truetype');
+  }
+
 body {
     font-family: Arial, sans-serif, VAL;
     margin: 0;
