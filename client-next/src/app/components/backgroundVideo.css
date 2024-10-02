@@ -7,7 +7,7 @@
 }
 
 .video-wrapper video {
-    height: 100vh;
+    height: 105vh;
     padding: 0px;
     filter:brightness(50%);
 }
