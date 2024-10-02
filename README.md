@@ -18,3 +18,26 @@ Temporary README.md file with directions for the project.
 5. Run `yarn dev` to start the project on localhost:3000.
 
 (Directions for Python coming)
+
+Amazon Bedrock(Mainly for Nathan): https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html
+
+
+For running the python:
+
+1. ssh user@your-production-server
+
+2. # Navigate to your project directory on the server
+    cd /path/to/your/project
+
+3. # Create a virtual environment (Python 3.x)
+    python3 -m venv venv
+
+4. a. # On Linux/MacOS
+    source venv/bin/activate
+
+    b. # On Windows (if applicable)
+    # .\venv\Scripts\activate
+
+5. pip install -r requirements.txt
+
+
