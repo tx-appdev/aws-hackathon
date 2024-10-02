@@ -41,5 +41,5 @@ next-env.d.ts
 .pnp.loader.mjs
 
 # python virtual environment
-.venv/
-backend/.env
+/.venv/
+/backend/.env
