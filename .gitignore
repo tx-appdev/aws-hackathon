@@ -39,3 +39,7 @@ next-env.d.ts
 .yarn
 .pnp.cjs
 .pnp.loader.mjs
+
+# python virtual environment
+.venv/
+backend/.env
