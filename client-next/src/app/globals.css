@@ -13,6 +13,11 @@
     src: URL('./fonts/Satoshi-VariableItalic.ttf') format('truetype');
   }
 
+@font-face {
+    font-family: 'STRENGTHEN';
+    src: URL('./fonts/Strengthen.ttf') format('truetype');
+  }
+
 body {
     font-family: Arial, sans-serif, VAL;
     margin: 0;
