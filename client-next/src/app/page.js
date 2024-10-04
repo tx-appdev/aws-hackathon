@@ -12,9 +12,9 @@ export default function HomePage() {
         <p>Build the best VALORANT team with AI-assisted analysis and scouting</p>
         
         {/* Start Now Button */}
-        <button class="btn btn--light">
-          <span class="btn__inner">
-            <span class="btn__slide"></span>
+        <button className="btn btn--light">
+          <span className="btn__inner">
+            <span className="btn__slide"></span>
             <span class="btn__content">START NOW</span>
           </span>
         </button>
