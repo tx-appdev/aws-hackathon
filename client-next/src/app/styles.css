@@ -1,6 +1,6 @@
 /* styles/intro.css */
 .intro-page {
-    padding: 0px;
+    padding: 0;
     text-align: center;
     color: white;
   }
@@ -15,11 +15,13 @@
 
 .title {
     font-family: Satoshi;
-    padding: 100px;
+    padding: 250px;
 }
 
 .title h1 {
-  font-family: VAL;
+  font-family: Satoshi;
+  font-size: 5rem;
+  margin: 0;
 }
 
 .body {
