@@ -172,6 +172,10 @@
   --button-bits-color-hover: #ece8e1;
 }
 
+.nav-link {
+  color: inherit;
+  text-decoration: none;
+}
 @media only screen and (max-width: 1500px) {
   .title{
     padding: 200px;
