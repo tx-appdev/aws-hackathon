@@ -1,6 +1,7 @@
 import SlidingCardList from './components/SlidingCardList';
 import SlidingCardList2 from './components/SlidingCardList2';
 import BackgroundVideo from './components/BackgroundVideo';
+import Link from 'next/link'; // Import the Link component
 import './styles.css';
 
 export default function HomePage() {
@@ -12,7 +13,16 @@ export default function HomePage() {
         <p>Build the best VALORANT team with AI-assisted analysis and scouting</p>
         
         {/* Start Now Button */}
-        <a href="/data" className="start-button">Start Now</a>
+        <Link href="/chatbot" className="nav-link">
+        <button className="btn btn--light">
+          <span className="btn__inner">
+            <span className="btn__slide"></span>
+            <span className="btn__content">
+            START NOW
+              </span>
+          </span>
+        </button>
+        </Link>
       </div>
       
       <SlidingCardList />
