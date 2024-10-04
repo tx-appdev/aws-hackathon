@@ -15,7 +15,7 @@ export default function HomePage() {
         <button className="btn btn--light">
           <span className="btn__inner">
             <span className="btn__slide"></span>
-            <span class="btn__content">START NOW</span>
+            <span className="btn__content">START NOW</span>
           </span>
         </button>
       </div>

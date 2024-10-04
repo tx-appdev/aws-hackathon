@@ -22,6 +22,7 @@
   font-family: Satoshi;
   font-size: 5rem;
   margin: 0;
+  margin-top: 40px;
 }
 
 .body {
@@ -169,4 +170,41 @@
   --button-inner-border-color: var(--highlight-color);
   --button-text-color-hover: #ece8e1;
   --button-bits-color-hover: #ece8e1;
+}
+
+@media only screen and (max-width: 1500px) {
+  .title{
+    padding: 200px;
+  }
+  .title h1 {
+    font-size: 5rem;
+  }
+  .title p {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .title{
+    padding: 4rem;
+  }
+  .title h1 {
+    font-size: 4.5rem;
+  }
+  .title p {
+    font-size: 1.35rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  /* For mobile phones: */
+  .title{
+    padding: 2rem;
+  }
+  .title h1 {
+    font-size: 4rem;
+  }
+  .title p {
+    font-size: 1.2rem;
+  }
 }
