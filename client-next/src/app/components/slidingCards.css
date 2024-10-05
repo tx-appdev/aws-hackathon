@@ -9,7 +9,7 @@
   .sliding-card-list {
     display: flex;
     gap: 20px; /* Space between cards */
-    transition: transform 0.1s linear; /* Smooth transition when cards are moved */
+    /*transition: transform 0.1s linear; /* Smooth transition when cards are moved */
   }
   
   .sliding-card {
@@ -19,7 +19,7 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: color .03s ease, box-shadow 0.3s linear, transform 0.3s ease;
+    /*transition: color .03s ease, box-shadow 0.3s linear, transform 0.3s ease;*/
     display: flex;
     flex-direction: column;
     justify-content: space-between;
