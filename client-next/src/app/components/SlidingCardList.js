@@ -5,6 +5,9 @@
 import { useEffect, useRef } from 'react';
 import SlidingCard from './SlidingCard';
 import './slidingCards.css';
+import { useMotionValue } from "framer-motion";
+import useMeasure from "react-use-measure";
+import { motion, animate } from "framer-motion"
 
 const cardsData = [
   {
@@ -30,35 +33,52 @@ const cardsData = [
 ];
 
 export default function SlidingCardList() {
-  const cardListRef = useRef(null);
+  // const cardListRef = useRef(null);
+
+  // useEffect(() => {
+  //   const cardList = cardListRef.current;
+  //   let scrollAmount = 0;
+  //   const cardWidth = 300 + 20; // Card width + gap
+
+  //   // Function to handle the continuous scrolling
+  //   const scrollCards = () => {
+  //     scrollAmount += 1; // Control the speed
+  //     if (scrollAmount >= cardWidth) {
+  //       // Move the first card to the end when it scrolls out of view
+  //       cardList.appendChild(cardList.firstElementChild);
+  //       scrollAmount = 0;
+  //     }
+  //     cardList.style.transform = `translateX(-${scrollAmount}px)`;
+  //     requestAnimationFrame(scrollCards);
+  //   };
+
+  //   // Start the scrolling
+  //   scrollCards();
+
+  //   return () => cancelAnimationFrame(scrollCards);
+  // }, []);
+
+  let [ref, {width}] = useMeasure();
+
+  const xTranslation = useMotionValue(0);
 
   useEffect(() => {
-    const cardList = cardListRef.current;
-    let scrollAmount = 0;
-    const cardWidth = 300 + 20; // Card width + gap
-
-    // Function to handle the continuous scrolling
-    const scrollCards = () => {
-      scrollAmount += 1; // Control the speed
-      if (scrollAmount >= cardWidth) {
-        // Move the first card to the end when it scrolls out of view
-        cardList.appendChild(cardList.firstElementChild);
-        scrollAmount = 0;
-      }
-      cardList.style.transform = `translateX(-${scrollAmount}px)`;
-      requestAnimationFrame(scrollCards);
-    };
-
-    // Start the scrolling
-    scrollCards();
-
-    return () => cancelAnimationFrame(scrollCards);
-  }, []);
+    let controls;
+    let finalPosition = -width / 2 - 620; //620 - 2 card widths + gap
+    controls = animate(xTranslation, [0, finalPosition], {
+      ease: 'linear',
+      duration: 25,
+      repeat: Infinity,
+      reapeatType: "loop",
+      repeatDelay: 0,
+    });
+    return controls.stop;
+  }, [xTranslation, width])
 
   return (
     <div className="sliding-card-wrapper">
-      <div className="sliding-card-list" ref={cardListRef}>
-        {cardsData.map((card, index) => (
+      <motion.div className="sliding-card-list"  ref = {ref}/*ref={cardListRef}*/ style={{x: xTranslation}} >
+        {[...cardsData, ...cardsData, ...cardsData].map((card, index) => (
           <SlidingCard
             key={index}
             title={card.title}
@@ -66,17 +86,7 @@ export default function SlidingCardList() {
             image={card.image}
           />
         ))}
-
-        {/* Duplicate the cards for smoother looping */}
-        {cardsData.map((card, index) => (
-          <SlidingCard
-            key={index + cardsData.length}
-            title={card.title}
-            description={card.description}
-            image={card.image}
-          />
-        ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
