@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
     "@react-hookz/web": "^24.0.4",
     "framer-motion": "^11.11.1",
+    "gsap": "^3.12.5",
     "next": "14.2.13",
     "next-videos": "1.4.1",
     "react": "^18",
