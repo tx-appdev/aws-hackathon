@@ -1,0 +1,119 @@
+.menu-bar, .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    box-sizing: border-box;
+}
+.menu-bar, .menu-bar a:visited{
+    background-color: #151515; /* Dark background */
+    color: white; /* Text color */
+    padding: 20px; /* Padding around the header */
+}
+.menu-bar a, .menu-open p, .menu-overlay-bar a, .menu-overlay-bar p{
+    padding-left: 15px;
+    margin: 0; /* Remove default margin */
+    font-size: 1.5em; /* Header font size */
+    font-family: VAL;
+    text-decoration: none;
+    cursor: pointer;
+}
+.menu-overlay-bar a:visited{
+    color:black;
+}
+.menu-close p {
+    color:black;
+    cursor: pointer;
+}
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 2em;
+    background: #fd4556;
+    z-index: 2;
+    display: flex;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+}
+.menu-close-icon {
+    flex: 2;
+    display: flex;
+    align-items: flex-end;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+.menu-copy {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 2em;
+}
+.menu-preview
+{
+    flex: 4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.menu-close-icon p{
+    font-size: 100px;
+    -webkit-text-stroke:5px #fd4556;
+    line-height: 70%;
+}
+.menu-item-index {
+    width: max-content;
+    font-family: VAL;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+.menu-link-item-holder {
+    position: relative;
+}
+.menu-link-item-holder a {
+    color: black;
+    font-size: 80px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 85%;
+    text-decoration: none;
+}
+.menu-info{
+    display: flex;
+}
+.menu-into-col{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.menu-overlay-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: 1em 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    box-sizing: border-box;
+}
+@media (max-width: 900px)
+{
+    .menu-close-icon{
+        display: none;
+    }
+    .menu-copy{
+        padding-top: 8em;
+    }
+    .menu-link-item-holder a {
+        font-size: 60px;
+    }
+}

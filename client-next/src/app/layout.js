@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Menu from './components/Menu/menu';
 
 export const metadata = {
   title: "VCT Hackathon",
@@ -11,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
+        <Menu />
         <main>{children}</main>
         <Footer />
       </body>
