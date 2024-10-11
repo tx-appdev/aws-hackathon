@@ -83,6 +83,11 @@
     letter-spacing: -0.02em;
     line-height: 85%;
     text-decoration: none;
+    transition: padding-left .3s ease, color .35s ease;
+}
+.menu-link-item-holder a:hover {
+    padding-left: 20px;
+    color: white;
 }
 .menu-info{
     display: flex;
