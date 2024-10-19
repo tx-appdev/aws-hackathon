@@ -2,25 +2,31 @@
 "use client";
 
 import React, { useState } from 'react';
-import styles from './Chatbot.css';
+import styles from './Chatbot.module.css';
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [chatLogs, setChatLogs] = useState([]);
+  const [currentChat, setCurrentChat] = useState(''); // Tracks current chat log
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!input.trim()) return; // Ignore empty input
+    if (!input.trim()) return;
 
     const userMessage = { sender: 'user', text: input };
     const botResponse = generateBotResponse(input);
 
-    setMessages([...messages, userMessage, botResponse]);
+    const updatedMessages = [...messages, userMessage, botResponse];
+    setMessages(updatedMessages);
+    setChatLogs((prevLogs) => {
+      const newLogs = { ...prevLogs, [currentChat]: updatedMessages };
+      return newLogs;
+    });
     setInput(''); // Clear the input field
   };
 
   const generateBotResponse = (input) => {
-    // Basic bot response logic (you can improve this)
     const botReplies = [
       "I'm here to help!",
       'Tell me more.',
@@ -28,13 +34,40 @@ export default function ChatbotPage() {
       'I can answer your questions!',
     ];
 
-    const randomReply =
-      botReplies[Math.floor(Math.random() * botReplies.length)];
+    const randomReply = botReplies[Math.floor(Math.random() * botReplies.length)];
     return { sender: 'bot', text: randomReply };
   };
 
+  const startNewChat = () => {
+    const newChatId = `Chat ${Object.keys(chatLogs).length + 1}`;
+    setCurrentChat(newChatId);
+    setMessages([]); // Reset messages for new chat
+  };
+
+  const handleSelectChat = (chatId) => {
+    setCurrentChat(chatId);
+    setMessages(chatLogs[chatId] || []);
+  };
+
   return (
-    <div className={styles.chatbotPage}>
+    <div className={styles.chatbotContainer}>
+      <aside className={styles.sidebar}>
+        <button className={styles.newChatButton} onClick={startNewChat}>
+          New Chat
+        </button>
+        <ul className={styles.chatLogList}>
+          {Object.keys(chatLogs).map((chatId) => (
+            <li
+              key={chatId}
+              className={styles.chatLogItem}
+              onClick={() => handleSelectChat(chatId)}
+            >
+              {chatId}
+            </li>
+          ))}
+        </ul>
+      </aside>
+
       <div className={styles.chatWindow}>
         <div className={styles.messages}>
           {messages.map((msg, index) => (

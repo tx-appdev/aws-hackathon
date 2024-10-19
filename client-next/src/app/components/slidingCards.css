@@ -19,7 +19,7 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    /*transition: color .03s ease, box-shadow 0.3s linear, transform 0.3s ease;*/
+    transition: color 0.03s ease, box-shadow 0.3s linear, transform 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -35,7 +35,7 @@
   }
     
   .sliding-card:hover {
-    box-shadow: 0 0 4px #bd3944;
+    box-shadow: 0 0 6px #bd3944;
     transform: scale(1.05);
     outline:#bd3944;
     color: #bd3944;

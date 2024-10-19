@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function HomePage() {
+export default function DataPage() {
   return (
     <section>
       <h1>Welcome to the Esports Manager</h1>
