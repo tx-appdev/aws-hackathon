@@ -16,10 +16,6 @@ client-next/out/
 # production
 /build
 
-# misc
-.DS_Store
-*.pem
-
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -35,11 +31,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
-.yarn
-.pnp.cjs
-.pnp.loader.mjs
-
 # python virtual environment
 .venv/
 backend/.env
+
+# misc
+.DS_Store
+*.pem
+.yarn
+.pnp.cjs
+.pnp.loader.mjs
