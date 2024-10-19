@@ -1,128 +1,92 @@
-import boto3
 import json
-import os
-from botocore.exceptions import BotoCoreError, ClientError
-from dotenv import load_dotenv
+import boto3
+from langchain_community.embeddings import BedrockEmbeddings
+from langchain_community.vectorstores import FAISS
 
-# Load environment variables from .env file if it exists
-load_dotenv()
+# Setup bedrock
+bedrock_runtime = boto3.client(
+    service_name="bedrock-runtime",
+    region_name="us-east-1",
+)
 
-def initialize_bedrock_client():
-    """
-    Initialize the Amazon Bedrock client using Boto3.
+sentences = [
+    # Pets
+    "Your dog is so cute.",
+    "How cute your dog is!",
+    "You have such a cute dog!",
+    # Cities in the US
+    "New York City is the place where I work.",
+    "I work in New York City.",
+    # Color
+    "What color do you like the most?",
+    "What is your favourite color?",
+]
 
-    Returns:
-        boto3.client: Bedrock client object.
-    """
-    try:
-        bedrock_client = boto3.client(
-            'bedrock',
-            region_name=os.getenv('AWS_DEFAULT_REGION', 'us-east-1')  # Replace with your preferred region if different
-        )
-        print("Successfully initialized Bedrock client.")
-        return bedrock_client
-    except Exception as e:
-        print(f"Error initializing Bedrock client: {e}")
-        return None
 
-def list_bedrock_models(client):
-    """
-    List available foundation models in Amazon Bedrock.
+def agent_prompt_format(prompt: str) -> str:
+    # Add headers to start and end of prompt
+    return "\n\nHuman: " + prompt + "\n\nAssistant:"
 
-    Args:
-        client (boto3.client): Bedrock client object.
-    """
-    try:
-        response = client.list_foundation_models()
-        models = response.get('foundationModelSummaries', [])
-        if not models:
-            print("No foundation models found.")
-            return
-        print("\nAvailable Foundation Models:")
-        for model in models:
-            model_name = model.get('modelName', 'N/A')
-            provider = model.get('provider', 'N/A')
-            print(f" - Model Name: {model_name}, Provider: {provider}")
-    except ClientError as e:
-        print(f"AWS ClientError: {e.response['Error']['Message']}")
-    except BotoCoreError as e:
-        print(f"BotoCoreError: {str(e)}")
-    except Exception as e:
-        print(f"Unexpected error while listing models: {str(e)}")
 
-def generate_text(client, model_id, prompt, max_tokens=100):
-    """
-    Generate text using a specified foundation model in Amazon Bedrock.
+# Call the Bedrock agent instead of directly calling the Claude model
+def call_bedrock_agent(prompt):
+    prompt_config = {
+        "prompt": agent_prompt_format(prompt),
+        "max_tokens_to_sample": 4096,
+        "temperature": 0.5,
+        "top_k": 250,
+        "top_p": 0.5,
+        "stop_sequences": [],
+    }
 
-    Args:
-        client (boto3.client): Bedrock client object.
-        model_id (str): The identifier of the foundation model to use.
-        prompt (str): The input text prompt for generation.
-        max_tokens (int): Maximum number of tokens to generate.
+    body = json.dumps(prompt_config)
 
-    Returns:
-        str: Generated text or None if an error occurred.
-    """
-    try:
-        response = client.invoke_model(
-            modelId=model_id,
-            body=json.dumps({
-                "prompt": prompt,
-                "maxTokens": max_tokens
-            }),
-            contentType='application/json'
-        )
-        
-        # Read and parse the response body
-        response_body = response['body'].read()
-        response_json = json.loads(response_body)
-        generated_text = response_json.get('generatedText', '')
-        return generated_text
-    except ClientError as e:
-        print(f"AWS ClientError: {e.response['Error']['Message']}")
-    except BotoCoreError as e:
-        print(f"BotoCoreError: {str(e)}")
-    except json.JSONDecodeError:
-        print("Error decoding JSON response.")
-    except Exception as e:
-        print(f"Unexpected error while generating text: {str(e)}")
-    return None
+    # Use the agent's model ID instead of a base model like Claude
+    agent_model_id = "your_bedrock_agent_id"  # Replace this with your Bedrock agent ID
+    accept = "application/json"
+    contentType = "application/json"
 
-def main():
-    """
-    Main function to execute Bedrock operations:
-    1. Initialize Bedrock client.
-    2. List available foundation models.
-    3. Generate text using a selected model.
-    """
-    # Initialize Bedrock client
-    bedrock_client = initialize_bedrock_client()
-    if not bedrock_client:
-        print("Failed to initialize Bedrock client. Exiting.")
-        return
+    response = bedrock_runtime.invoke_model(
+        body=body, modelId=agent_model_id, accept=accept, contentType=contentType
+    )
+    response_body = json.loads(response.get("body").read())
 
-    # List available models
-    list_bedrock_models(bedrock_client)
+    results = response_body.get("completion")
+    return results
 
-    # Prompt user for model selection and input
-    model_id = input("\nEnter the Model ID you want to use (e.g., 'anthropic.claude-v1'): ").strip()
-    if not model_id:
-        print("No Model ID provided. Exiting.")
-        return
 
-    prompt = input("Enter your prompt for text generation: ").strip()
-    if not prompt:
-        print("No prompt provided. Exiting.")
-        return
+# Function to set up RAG (retrieve-augmented generation)
+def rag_setup(query):
+    # Embed the sentences using Bedrock embeddings
+    embeddings = BedrockEmbeddings(
+        client=bedrock_runtime,
+        model_id="amazon.titan-embed-text-v1",  # Titan model for embeddings
+    )
 
-    # Generate text
-    print("\nGenerating text...")
-    generated = generate_text(bedrock_client, model_id, prompt)
-    if generated:
-        print("\n--- Generated Text ---")
-        print(generated)
-    else:
-        print("Failed to generate text.")
+    # Create a local FAISS vector store
+    local_vector_store = FAISS.from_texts(sentences, embeddings)
 
-if __name__ == "__main__":
-    main()
+    # Perform similarity search to get relevant context
+    docs = local_vector_store.similarity_search(query)
+    context = ""
+
+    # Compile the retrieved context
+    for doc in docs:
+        context += doc.page_content
+
+    # Construct the prompt with the retrieved context
+    prompt = f"""Use the following pieces of context to answer the question at the end.
+
+    {context}
+
+    Question: {query}
+    Answer:"""
+
+    # Call the Bedrock agent instead of a specific base model
+    return call_bedrock_agent(prompt)
+
+
+# Query to test the agent with RAG
+query = "What type of pet do I have?"
+print(query)
+print(rag_setup(query))
