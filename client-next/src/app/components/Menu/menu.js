@@ -90,9 +90,6 @@ const Menu = () => {
                     </div>
                 </div>
             </div>
-            <div className="menu-preview">
-                <p>Video preview</p>
-            </div>
         </div>
     </div>;
 }

@@ -2,7 +2,7 @@
 
 .chatbotContainer {
   display: flex;
-  height: 100vh;
+  height: 85vh;
   background-color: #f4f4f4;
   padding-top: 60px;
   overflow: hidden; /* Prevents horizontal scroll */
