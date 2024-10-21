@@ -1,92 +1,153 @@
 import json
 import boto3
-from langchain_community.embeddings import BedrockEmbeddings
-from langchain_community.vectorstores import FAISS
+import uuid
 
 # Setup bedrock
-bedrock_runtime = boto3.client(
-    service_name="bedrock-runtime",
+client = boto3.client(
+    service_name="bedrock-agent-runtime",
     region_name="us-east-1",
 )
 
-sentences = [
-    # Pets
-    "Your dog is so cute.",
-    "How cute your dog is!",
-    "You have such a cute dog!",
-    # Cities in the US
-    "New York City is the place where I work.",
-    "I work in New York City.",
-    # Color
-    "What color do you like the most?",
-    "What is your favourite color?",
-]
+input_text = "Hello, please enter the information to create a VALORANT Team"
 
+agent_alias_id = 'ALP9UYMYI9'
 
-def agent_prompt_format(prompt: str) -> str:
-    # Add headers to start and end of prompt
-    return "\n\nHuman: " + prompt + "\n\nAssistant:"
+agent_id = '2P7SZ0COP0'
 
+session_id = str(uuid.uuid4())  # Generate a unique session ID
 
-# Call the Bedrock agent instead of directly calling the Claude model
-def call_bedrock_agent(prompt):
-    prompt_config = {
-        "prompt": agent_prompt_format(prompt),
-        "max_tokens_to_sample": 4096,
-        "temperature": 0.5,
-        "top_k": 250,
-        "top_p": 0.5,
-        "stop_sequences": [],
+response = client.invoke_agent(
+    agentAliasId=agent_alias_id,
+    agentId=agent_id,
+    enableTrace=False,
+    endSession=False,# can set either to true if needed
+    inputText= input_text,
+    # memoryId='string',
+    sessionId=session_id,
+    sessionState={
+        # 'files': [
+        #     {
+        #         'name': 'example.txt',
+        #         'source': {
+        #             'byteContent': {
+        #                 'data': b'byte content here',
+        #                 'mediaType': 'text/plain'
+        #             },
+        #             # Choose one of these based on your source type
+        #             # 's3Location': {
+        #             #     'uri': 's3://your-bucket/path/to/file'
+        #             # },
+        #             'sourceType': 'BYTE_CONTENT'  # or 'S3'
+        #         },
+        #         'useCase': 'CHAT'  # or 'CODE_INTERPRETER'
+        #     },
+        # ],
+        'invocationId': str(uuid.uuid4()),
+        'knowledgeBaseConfigurations': [
+            {
+                'knowledgeBaseId': '1SIQMDIMHZ',
+                'retrievalConfiguration': 
+                {
+                    'vectorSearchConfiguration': {
+                        'filter': {
+                            'equals': {
+                                'key': 'category',
+                                'value': 'science'
+                            }
+                            # 'andAll': [
+                            #     {'... recursive ...'},
+                            # ],
+                            # 'equals': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'greaterThan': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'greaterThanOrEquals': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'in': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'lessThan': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'lessThanOrEquals': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'listContains': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'notEquals': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'notIn': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'orAll': [
+                            #     {'... recursive ...'},
+                            # ],
+                            # 'startsWith': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # },
+                            # 'stringContains': {
+                            #     'key': 'string',
+                            #     'value': {...}|[...]|123|123.4|'string'|True|None
+                            # }
+                        },
+                        'numberOfResults': 10,
+                        'overrideSearchType': 'SEMANTIC' # or "HYBRID"
+                    }
+                }
+            },
+        ],
+        'promptSessionAttributes': {
+            'string': 'string'
+        },
+        'returnControlInvocationResults': [
+            {
+                'apiResult': {
+                    'actionGroup': 'string',
+                    'apiPath': 'string',
+                    'confirmationState': 'CONFIRM', # or DENY
+                    'httpMethod': 'string',
+                    'httpStatusCode': 123,
+                    'responseBody': {
+                        'string': {
+                            'body': 'string'
+                        }
+                    },
+                    'responseState': 'FAILURE'# or 'REPROMPT'
+                },
+                # 'functionResult': {
+                #     'actionGroup': 'string',
+                #     'confirmationState': 'CONFIRM', # |'DENY'
+                #     'function': 'string',
+                #     'responseBody': {
+                #         'string': {
+                #             'body': 'string'
+                #         }
+                #     },
+                #     'responseState': 'FAILURE'# |'REPROMPT'
+                # }
+            },
+        ],
+        'sessionAttributes': {
+            'string': 'string'
+        }
     }
+)
 
-    body = json.dumps(prompt_config)
-
-    # Use the agent's model ID instead of a base model like Claude
-    agent_model_id = "your_bedrock_agent_id"  # Replace this with your Bedrock agent ID
-    accept = "application/json"
-    contentType = "application/json"
-
-    response = bedrock_runtime.invoke_model(
-        body=body, modelId=agent_model_id, accept=accept, contentType=contentType
-    )
-    response_body = json.loads(response.get("body").read())
-
-    results = response_body.get("completion")
-    return results
-
-
-# Function to set up RAG (retrieve-augmented generation)
-def rag_setup(query):
-    # Embed the sentences using Bedrock embeddings
-    embeddings = BedrockEmbeddings(
-        client=bedrock_runtime,
-        model_id="amazon.titan-embed-text-v1",  # Titan model for embeddings
-    )
-
-    # Create a local FAISS vector store
-    local_vector_store = FAISS.from_texts(sentences, embeddings)
-
-    # Perform similarity search to get relevant context
-    docs = local_vector_store.similarity_search(query)
-    context = ""
-
-    # Compile the retrieved context
-    for doc in docs:
-        context += doc.page_content
-
-    # Construct the prompt with the retrieved context
-    prompt = f"""Use the following pieces of context to answer the question at the end.
-
-    {context}
-
-    Question: {query}
-    Answer:"""
-
-    # Call the Bedrock agent instead of a specific base model
-    return call_bedrock_agent(prompt)
-
-
-# Query to test the agent with RAG
-query = "What type of pet do I have?"
-print(query)
-print(rag_setup(query))
+print(response.get("body").read())
+response_body = json.loads(response.get("body").read())
+print(response_body.get("completion"))
