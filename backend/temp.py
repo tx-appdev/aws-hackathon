@@ -1,14 +1,6 @@
-import json
-import boto3
-import uuid
+   
 
-# Setup bedrock
-client = boto3.client(
-    service_name="bedrock-agent-runtime",
-    region_name="us-east-1",
-) 
 
-input_text = "Hello, please enter the information to create a VALORANT Team"
 
 
 def invoke_agent(self, agent_id, agent_alias_id, session_id, prompt):
@@ -23,28 +15,27 @@ def invoke_agent(self, agent_id, agent_alias_id, session_id, prompt):
         :return: Inference response from the model.
         """
 
-        # try:
+        try:
             # Note: The execution time depends on the foundation model, complexity of the agent,
             # and the length of the prompt. In some cases, it can take up to a minute or more to
             # generate a response.
-        response = self.invoke_agent(
+            response = self.agents_runtime_client.invoke_agent(
                 agentId=agent_id,
                 agentAliasId=agent_alias_id,
                 sessionId=session_id,
                 inputText=prompt,
             )
 
-        completion = ""
+            completion = ""
 
-        for event in response.get("completion"):
+            for event in response.get("completion"):
                 chunk = event["chunk"]
                 completion = completion + chunk["bytes"].decode()
 
-        # except ClientError as e:
-        #     logger.error(f"Couldn't invoke agent. {e}")
-        #     raise
+        except ClientError as e:
+            logger.error(f"Couldn't invoke agent. {e}")
+            raise
 
         return completion
 
 
-print(invoke_agent(client, agent_id = '2P7SZ0COP0', agent_alias_id='ALP9UYMYI9', session_id=str(uuid.uuid4()), prompt=input_text))
