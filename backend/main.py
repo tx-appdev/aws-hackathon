@@ -6,11 +6,11 @@ from langchain_community.vectorstores import FAISS
 import pandas as pd
 
 bedrock = boto3.client(service_name="bedrock-runtime")
-body = json.dumps({
-  "max_tokens": 256,
-  "messages": [{"role": "user", "content": "Hello, world"}],
-  "anthropic_version": "bedrock-2023-05-31"
-})
+# body = json.dumps({
+#   "max_tokens": 256,
+#   "messages": [{"role": "user", "content": "Hello, world"}],
+#   "anthropic_version": "bedrock-2023-05-31"
+# })
 
 df = pd.read_csv('./backend/vct.csv')
 # sentences = df['sentences_column_name'].tolist() # don't really know what this is for
@@ -21,7 +21,7 @@ embeddings = BedrockEmbeddings(
     model_id="amazon.titan-embed-text-v1",  # Titan embedding model for text
 )
 
-
+print(data)
 local_vector_store = FAISS.from_texts(data, embeddings) #df repleaced "sentences"
 
 def retrieve_context(query):
