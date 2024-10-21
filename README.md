@@ -1,29 +1,40 @@
-# VCT Hackathon 2024
+# VCT X AWS | Esports Manager Challenge
 
-Temporary README.md file with directions for the project.
+### Inspiration
 
-## Downloads
+Our inspiration for this project stems from our former founding and management of our high school Valorant Esports team, which went on to achieve a 3rd place ranking in the High School Esports League's Atlantic Region.
 
-- **Git:** https://git-scm.com/downloads (select VSCode as default code editor)
-- **Node.js:** https://nodejs.org/en (local node environment)
-- **NVM:** https://github.com/nvm-sh/nvm (optional, but good to have in case of different node versions)
-- **Python:** https://www.python.org/downloads/
+### What It Does
 
-## Development Guide
+This LLM-Powered Digital Esports Assistant is a next-gen esports management app that leverages AI and Amazon Bedrock to analyze player performance, optimize team compositions, and provide personalized insights for professional Valorant teams.
 
-### Next.js
-1. Install yarn (Windows tutorial: https://youtu.be/HyJ89KCB7x8?si=GDqsvi3ZUBw1Jnc-)
-2. Sign in to VSCode with your GitHub account and clone the repository. Instructions can be found here: https://code.visualstudio.com/docs/sourcecontrol/github
-3. Open the VSCode terminal and navigate to the client-next folder with `cd client-next`.
-4. Run `yarn install` to install all the needed dependencies for the project.
-5. Run `yarn dev` to start the project on localhost:3000.
+### How We Built It
 
-### Python
-1. In your terminal, run: `ssh user@your-production-server`
-2. Navigate to your project directory on the server: `cd /path/to/your/project`
-3. Create a virtual environment (Python 3.x): `python3 -m venv venv`
-4. On Linux/MacOS: `source venv/bin/activate`
-5. On Windows (if applicable): `.\venv\Scripts\activate`
-6. Install requirements: `pip install -r requirements.txt`
+#### Designing Our App
 
-Amazon Bedrock: https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html
+To optimize performance through server sided rendering and static site generation, we opted to use Next.js for our web application. We chose to implement a Python backend for compatibility with Cloud AI services, allowing seamless integration with Amazon Bedrock.
+
+#### LLM Training and Implementation
+
+To train and use the LLM for our project, we implemented the following procedures:
+
+- First, we used an Amazon IAM to set up our organization and to access Amazon Bedrock's Anthropic Claude model.
+- We then accessed player statistics from https://www.vlr.gg/stats, converted the data into CSV files, and uploaded the data to Amazon Bedrock's Knowledge Bases.
+- To implement Amazon Bedrock in our app, we used Pandas to parse the CSV data files and Boto3 to interact with AWS services.
+- After setting up the AWS server, we used an API gateway to fetch data and responses from the backend whenever the user chat interface instantiated a new conversation.
+
+### Challenges We Faced
+
+One of the primary challenges we faced was a lack of experience developing with AWS products, as well as a lack of exposure to training LLM models in general. However, we turned this into a rich learning experience and gained critical skills working with Amazon Bedrock and Python backend environments in full-stack applications.
+
+### Accomplishments We're Proud Of
+
+Some accomplishments we are proud of include our implementation of a functional chat interface powered by Amazon Bedrock and our proactiveness in learning new skills under set time constraints. We are also proud of our versatility in developing a full-fledged application together as students based in multiple different universities.
+
+### What We Learned
+
+Through this project, we gained valuable experience implementing AWS services in full-stack web applications. We learned to navigate the AWS platform and work with elements of a Python backend, as well as training an LLM model with custom data.
+
+### What's Next
+
+To improve on this project further, we plan to use a larger data set to train the LLM model to improve accuracy of responses. We also plan to refactor our code base for the web application from having multiple CSS files to being fully Tailwind, in order to improve performance and increase maintainability. 
