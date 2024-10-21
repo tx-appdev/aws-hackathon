@@ -138,10 +138,7 @@ class BedrockAgentScenarioWrapper:
                 f"Agent {name} conflicts with an existing agent. Please use a different name."
             )
 
-        models = ["anthropic.claude-instant-v1", "anthropic.claude-v2"]
-        model_id = models[
-            q.choose("Which foundation model would you like to use? ", models)
-        ]
+        model_id ="anthropic.claude-3-haiku-20240307-v1:0"
 
         return name, model_id
 
@@ -192,9 +189,7 @@ class BedrockAgentScenarioWrapper:
         print("Creating the agent...")
 
         instruction = """
-            You are a friendly chat bot. You have access to a function called that returns
-            information about the current date and time. When responding with date or time,
-            please make sure to add the timezone UTC.
+            You are to create the best five man team that fits the parameters the user requests, here is the .csv file 
             """
         agent = self.bedrock_wrapper.create_agent(
             agent_name=name,
@@ -313,7 +308,7 @@ class BedrockAgentScenarioWrapper:
         print("Creating an action group for the agent...")
 
         try:
-            with open("./scenario_resources/api_schema.yaml") as file:
+            with open("scenario_resources/api_schema.yaml") as file:
                 self.bedrock_wrapper.create_agent_action_group(
                     name="current_date_and_time",
                     description="Gets the current date and time.",
@@ -454,7 +449,7 @@ class BedrockAgentScenarioWrapper:
         buffer = io.BytesIO()
         with zipfile.ZipFile(buffer, "w") as zipped:
             zipped.write(
-                "./scenario_resources/lambda_function.py", f"{function_name}.py"
+                "scenario_resources/lambda_function.py", f"{function_name}.py"
             )
         buffer.seek(0)
         return buffer.read()
