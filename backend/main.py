@@ -148,6 +148,11 @@ response = client.invoke_agent(
     }
 )
 
-print(response.get("body").read())
-response_body = json.loads(response.get("body").read())
-print(response_body.get("completion"))
+if 'functionResult' in response and 'responseBody' in response['functionResult']:
+    body = response['functionResult']['responseBody']
+    print("Agent Response Body:", body)
+elif 'apiResult' in response and 'responseBody' in response['apiResult']:
+    body = response['apiResult']['responseBody']
+    print("Agent Response Body:", body)
+else:
+    print("No valid response body found.")
