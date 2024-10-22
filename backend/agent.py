@@ -11,7 +11,7 @@ from io import BytesIO
 iam_client = boto3.client('iam')
 sts_client = boto3.client('sts')
 session = boto3.session.Session()
-region = session.region_name
+region = 'us-east-1'
 account_id = sts_client.get_caller_identity()["Account"]
 dynamodb_client = boto3.client('dynamodb')
 dynamodb_resource = boto3.resource('dynamodb')

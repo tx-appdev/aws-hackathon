@@ -9,7 +9,7 @@ import pandas as pd
 import uuid
 logging.basicConfig(format='[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
-bedrock_agent_runtime_client = boto3.client('bedrock-agent-runtime')
+bedrock_agent_runtime_client = boto3.client('bedrock-agent-runtime', region_name='us-east-1')
 dynamodb = boto3.resource('dynamodb')
 
 def invoke_agent_helper(query, session_id, agent_id, alias_id, enable_trace=False, session_state=None):
@@ -49,7 +49,7 @@ def invoke_agent_helper(query, session_id, agent_id, alias_id, enable_trace=Fals
         raise Exception("unexpected event.", e)
 
 session_id:str = str(uuid.uuid1())
-query = "What is in the childrens menu?"
-response = invoke_agent_helper(query, session_id, 'U7CB26MHMI', 'XGQ3BBADEA')
+query = "What is the first name in the knowledge base"
+response = invoke_agent_helper(query, session_id, 'U7CB26MHMI', '6X0BHHM7EZ')
 print(response)
 
