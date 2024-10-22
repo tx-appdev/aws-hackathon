@@ -50,15 +50,17 @@ def invoke_agent_helper(query, session_id, agent_id, alias_id, enable_trace=Fals
     except Exception as e:
         raise Exception("unexpected event.", e)
 
-session_id:str = str(uuid.uuid1())
-query = "Create a 5 man team"
-response = invoke_agent_helper(query, session_id, 'U7CB26MHMI', '6X0BHHM7EZ')
-
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains on all routes
 
 @app.route('/chat', methods=['POST'])
 def chat():
+    data = request.json
+    query = data.get('query', 'default query')
+    session_id = str(uuid.uuid1())
+    
+    # Now invoke the agent dynamically
+    response = invoke_agent_helper(query, session_id, 'U7CB26MHMI', '6X0BHHM7EZ')
     return jsonify({"response": response})
 
 if __name__ == '__main__':
