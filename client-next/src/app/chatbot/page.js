@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import styles from './Chatbot.module.css';
+import axios from 'axios';
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([]);
@@ -26,16 +27,15 @@ export default function ChatbotPage() {
     setInput(''); // Clear the input field
   };
 
-  const generateBotResponse = (input) => {
-    const botReplies = [
-      "I'm here to help!",
-      'Tell me more.',
-      'How can I assist you today?',
-      'I can answer your questions!',
-    ];
-
-    const randomReply = botReplies[Math.floor(Math.random() * botReplies.length)];
-    return { sender: 'bot', text: randomReply };
+  const generateBotResponse = async (input) => {
+    try {
+      const response = await axios.post('http://localhost:5000/chatbot', {
+        message: input,
+      });
+      return { sender: 'bot', text: response.data.response };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const startNewChat = () => {

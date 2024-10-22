@@ -1,5 +1,7 @@
 # attempt using: https://github.com/aws-samples/amazon-bedrock-workshop/blob/main/05_Agents/01_create_agent.ipynb
 
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import boto3
 import logging
 import pprint
@@ -51,5 +53,23 @@ def invoke_agent_helper(query, session_id, agent_id, alias_id, enable_trace=Fals
 session_id:str = str(uuid.uuid1())
 query = "Create a 5 man team"
 response = invoke_agent_helper(query, session_id, 'U7CB26MHMI', '6X0BHHM7EZ')
-print(response)
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all domains on all routes
+
+@app.route('/chatbot', methods=['POST'])
+def chat():
+    data = request.json  # Get the JSON data from the request
+    user_message = data.get('message')
+    
+    # Simulate some Python logic based on the message
+    if user_message:
+        response_message = f"Python says: {user_message[::-1]}"  # Just reversing the input as an example
+    else:
+        response_message = "Python says: Please provide a message!"
+    
+    return jsonify({"response": response})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
