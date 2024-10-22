@@ -57,17 +57,8 @@ response = invoke_agent_helper(query, session_id, 'U7CB26MHMI', '6X0BHHM7EZ')
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains on all routes
 
-@app.route('/chatbot', methods=['POST'])
+@app.route('/chat', methods=['POST'])
 def chat():
-    data = request.json  # Get the JSON data from the request
-    user_message = data.get('message')
-    
-    # Simulate some Python logic based on the message
-    if user_message:
-        response_message = f"Python says: {user_message[::-1]}"  # Just reversing the input as an example
-    else:
-        response_message = "Python says: Please provide a message!"
-    
     return jsonify({"response": response})
 
 if __name__ == '__main__':
