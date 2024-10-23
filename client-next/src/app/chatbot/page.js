@@ -20,21 +20,38 @@ export default function ChatbotPage() {
   
     try {
       const botResponse = await generateBotResponse(input); // Wait for bot response
-      setMessages((prevMessages) => {
-        const updatedMessages = [...prevMessages, botResponse];
-        
-        // Update the chat logs
-        setChatLogs((prevLogs) => ({
-          ...prevLogs,
-          [currentChat]: updatedMessages,
-        }));
-        
-        return updatedMessages;
-      });
+      await typeBotMessage(botResponse.text); // Call the typing function
     } catch (error) {
       console.error("Error in bot response:", error);
     }
+  
     setInput(''); // Clear the input field
+  };
+  
+  const typeBotMessage = async (messageText) => {
+    // Create an empty message for the bot first
+    const botMessage = { sender: 'bot', text: '' };
+    setMessages((prevMessages) => [...prevMessages, botMessage]); // Add the empty bot message
+  
+    for (let i = 0; i < messageText.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 10)); // Typing speed (50ms per letter)
+  
+      setMessages((prevMessages) => {
+        // Create a new array to avoid modifying the original array directly
+        const updatedMessages = [...prevMessages];
+  
+        // Get the last message (the bot message being typed)
+        const lastMessage = { ...updatedMessages[updatedMessages.length - 1] };
+  
+        if (lastMessage.sender === 'bot') {
+          // Append the next character
+          lastMessage.text += messageText[i];
+          updatedMessages[updatedMessages.length - 1] = lastMessage; // Update the last message in the array
+        }
+  
+        return updatedMessages;
+      });
+    }
   };
 
   const generateBotResponse = async (input) => {
