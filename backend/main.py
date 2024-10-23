@@ -6,9 +6,9 @@ import boto3
 import logging
 import pprint
 import json
-import pandas as pd
-# from agent import invoke_agent_helper
 import uuid
+# from agent import invoke_agent_helper
+
 logging.basicConfig(format='[%(asctime)s] p%(process)s {%(filename)s:%(lineno)d} %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 bedrock_agent_runtime_client = boto3.client('bedrock-agent-runtime', region_name='us-east-1')
@@ -41,7 +41,6 @@ def invoke_agent_helper(query, session_id, agent_id, alias_id, enable_trace=Fals
                     logger.info(f"Final answer ->\n{data.decode('utf8')}")
                 agent_answer = data.decode('utf8')
                 return agent_answer
-                # End event indicates that the request finished successfully
             elif 'trace' in event:
                 if enable_trace:
                     logger.info(json.dumps(event['trace'], indent=2))
@@ -58,7 +57,7 @@ def getText(input):
     return response
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all domains on all routes
+CORS(app)
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -66,10 +65,6 @@ def chat():
     query = data.get('query', 'default query')
     response = getText(query)
     return jsonify({"response": response})
-
-# @app.route('/chat', methods=['POST'])
-# def chat():
-#     return jsonify({"response": "This is a test response"})
 
 if __name__ == '__main__':
     app.run(debug=True)
