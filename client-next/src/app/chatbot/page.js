@@ -67,10 +67,26 @@ export default function ChatbotPage() {
   };
 
   const startNewChat = () => {
-    const newChatId = `Chat ${Object.keys(chatLogs).length + 1}`;
-    setCurrentChat(newChatId);
-    setMessages([]); // Reset messages for new chat
+    setChatLogs((prevLogs) => {
+      // Save the current messages to chatLogs
+      if (messages.length > 0 && currentChat) {
+        return {
+          ...prevLogs,
+          [currentChat]: messages, // Store current messages under currentChat ID
+        };
+      }
+      return prevLogs;
+    });
+  
+    // Now create the new chat ID and reset the chat window
+    setCurrentChat((prevChatId) => {
+      const newChatId = `Chat ${Object.keys(chatLogs).length + 1}`;
+      setMessages([]); // Clear out messages for the new chat
+      return newChatId;
+    });
   };
+  
+  
 
   const handleSelectChat = (chatId) => {
     setCurrentChat(chatId);

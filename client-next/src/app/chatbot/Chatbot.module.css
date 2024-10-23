@@ -2,12 +2,12 @@
 
 .chatbotContainer {
   display: flex;
-  height: 85vh;
+  height: 90vh;
   background-color: #000000;
   padding-top: 60px;
   overflow: hidden; /* Prevents horizontal scroll */
   font-family: Satoshi;
-
+  padding-bottom: 20px;
 }
 
 .sidebar {
@@ -30,6 +30,7 @@
   padding: 10px;
   margin-bottom: 20px;
   cursor: pointer;
+  font-family: Satoshi;
 }
 
 .newChatButton:hover {
@@ -108,16 +109,18 @@
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  font-family: Satoshi;
 }
 
 .sendButton {
-  padding: 10px 20px;
+  padding: 10px 30px;
   margin-left: 10px;
   background-color: #fd4556;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: Satoshi;
 }
 
 .sendButton:hover {
