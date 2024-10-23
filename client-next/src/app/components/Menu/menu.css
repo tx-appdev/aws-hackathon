@@ -29,6 +29,13 @@
 .menu-close p {
     color:black;
     cursor: pointer;
+    transition: .2s ease color;
+}
+.menu-close p:hover {
+    color: white;
+}
+.menu-logo:hover {
+    color: white;
 }
 .menu-overlay {
     position: fixed;
@@ -63,11 +70,7 @@
     justify-content: flex-end;
     align-items: flex-end;
 }
-.menu-close-icon p{
-    font-size: 100px;
-    -webkit-text-stroke:5px #fd4556;
-    line-height: 70%;
-}
+
 .menu-item-index {
     width: max-content;
     font-family: VAL;
