@@ -1,6 +1,8 @@
 import SlidingCardList from './components/SlidingCardList';
 import SlidingCardList2 from './components/SlidingCardList2';
 import BackgroundVideo from './components/BackgroundVideo';
+import ProductSection from './components/ProductSection.js';
+import videoSrc from "./public/menu.mp4";
 import Link from 'next/link'; // Import the Link component
 import './styles.css';
 
@@ -30,6 +32,24 @@ export default function HomePage() {
       <SlidingCardList />
       
       <div className="body"></div>
+      <ProductSection 
+        title="Amazing Product"
+        description="This is a short description about the product. It's an amazing item you will love."
+        video= {videoSrc}
+        imageLeft={true}  // Set to false if you want the image on the right
+      />
+      <ProductSection 
+        title="Amazing Product"
+        description="This is a short description about the product. It's an amazing item you will love."
+        video= {videoSrc}
+        imageLeft={false}  // Set to false if you want the image on the right
+      />
+      <ProductSection 
+        title="Amazing Product"
+        description="This is a short description about the product. It's an amazing item you will love."
+        video= {videoSrc}
+        imageLeft={true}  // Set to false if you want the image on the right
+      />
     </section>
   );
 }
