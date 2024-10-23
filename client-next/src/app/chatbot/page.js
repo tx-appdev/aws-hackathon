@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import styles from './Chatbot.module.css';
+import axios from 'axios';
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([]);
@@ -10,32 +11,42 @@ export default function ChatbotPage() {
   const [chatLogs, setChatLogs] = useState([]);
   const [currentChat, setCurrentChat] = useState(''); // Tracks current chat log
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-
+  
     const userMessage = { sender: 'user', text: input };
-    const botResponse = generateBotResponse(input);
-
-    const updatedMessages = [...messages, userMessage, botResponse];
-    setMessages(updatedMessages);
-    setChatLogs((prevLogs) => {
-      const newLogs = { ...prevLogs, [currentChat]: updatedMessages };
-      return newLogs;
-    });
+    setMessages((prevMessages) => [...prevMessages, userMessage]); // Add user message first
+  
+    try {
+      const botResponse = await generateBotResponse(input); // Wait for bot response
+      setMessages((prevMessages) => {
+        const updatedMessages = [...prevMessages, botResponse];
+        
+        // Update the chat logs
+        setChatLogs((prevLogs) => ({
+          ...prevLogs,
+          [currentChat]: updatedMessages,
+        }));
+        
+        return updatedMessages;
+      });
+    } catch (error) {
+      console.error("Error in bot response:", error);
+    }
     setInput(''); // Clear the input field
   };
 
-  const generateBotResponse = (input) => {
-    const botReplies = [
-      "I'm here to help!",
-      'Tell me more.',
-      'How can I assist you today?',
-      'I can answer your questions!',
-    ];
-
-    const randomReply = botReplies[Math.floor(Math.random() * botReplies.length)];
-    return { sender: 'bot', text: randomReply };
+  const generateBotResponse = async (input) => {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/chat', {
+        query: input, // Changed "message" to "query"
+      });
+      return { sender: 'bot', text: response.data.response };
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      return { sender: 'bot', text: "Sorry, something went wrong." }; // Fallback response
+    }
   };
 
   const startNewChat = () => {

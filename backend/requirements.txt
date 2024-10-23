@@ -1,3 +1,11 @@
-boto3==1.35.44
+boto3
 requests
 python-dotenv
+langchain-aws
+langchain-community
+pandas
+faiss-cpu
+flask
+flask-cors
+logging
+uuid
