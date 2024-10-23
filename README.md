@@ -20,8 +20,8 @@ To train and use the LLM for our project, we implemented the following procedure
 
 - First, we used an Amazon IAM to set up our organization and to access Amazon Bedrock's Anthropic Claude model.
 - We then accessed player statistics from https://www.vlr.gg/stats, converted the data into CSV files, and uploaded the data to Amazon Bedrock's Knowledge Bases.
-- To implement Amazon Bedrock in our app, we used Pandas to parse the CSV data files and Boto3 to interact with AWS services.
-- After setting up the AWS server, we used an API gateway to fetch data and responses from the backend whenever the user chat interface instantiated a new conversation.
+- To implement Amazon Bedrock in our app, we used Boto3 to interact with AWS services and receive a text response.
+- Finally, we used an Axios and Flask to fetch the responses from the backend whenever the user chat interface instantiated a new conversation.
 
 ### Challenges We Faced
 
