@@ -7,3 +7,5 @@ pandas
 faiss-cpu
 flask
 flask-cors
+logging
+uuid
