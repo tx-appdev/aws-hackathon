@@ -14,8 +14,11 @@ export default function ChatbotPage() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
+
+    const temp = input;
+    setInput(''); // Clear the input field
   
-    const userMessage = { sender: 'user', text: input };
+    const userMessage = { sender: 'user', text: temp };
     setMessages((prevMessages) => [...prevMessages, userMessage]); // Add user message first
   
     try {
@@ -24,8 +27,6 @@ export default function ChatbotPage() {
     } catch (error) {
       console.error("Error in bot response:", error);
     }
-  
-    setInput(''); // Clear the input field
   };
   
   const typeBotMessage = async (messageText) => {
