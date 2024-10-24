@@ -25,7 +25,7 @@ To train and use the LLM for our project, we implemented the following procedure
 
 ### Challenges We Faced
 
-One of the primary challenges we faced was a lack of experience developing with AWS products, as well as a lack of exposure to training LLM models in general. However, we turned this into a rich learning experience and gained critical skills working with Amazon Bedrock and Python backend environments in full-stack applications.
+One of the primary challenges we faced was a lack of experience developing with AWS products. However, we turned this into a rich learning experience and gained critical skills working with Amazon Bedrock and Python backend environments in full-stack applications.
 
 ### Accomplishments We're Proud Of
 
