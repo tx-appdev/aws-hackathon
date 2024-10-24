@@ -1,13 +1,12 @@
 import "./globals.css";
-import Header from './components/Header';
 import Footer from './components/Footer';
 import Menu from './components/Menu/menu';
 
 import SmoothScroll from "./components/SmoothScroll";
 
 export const metadata = {
-  title: "VCT Hackathon",
-  description: "LLM-Powered Esports Assistant for VCT Hackathon 2024",
+  title: "VCT X AWS Hackathon",
+  description: "LLM-Powered Esports Assistant for VCT X AWS Hackathon 2024",
 };
 
 export default function RootLayout({ children }) {
