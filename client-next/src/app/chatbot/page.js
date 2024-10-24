@@ -14,27 +14,45 @@ export default function ChatbotPage() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
+
+    const temp = input;
+    setInput(''); // Clear the input field
   
-    const userMessage = { sender: 'user', text: input };
+    const userMessage = { sender: 'user', text: temp };
     setMessages((prevMessages) => [...prevMessages, userMessage]); // Add user message first
   
     try {
       const botResponse = await generateBotResponse(input); // Wait for bot response
-      setMessages((prevMessages) => {
-        const updatedMessages = [...prevMessages, botResponse];
-        
-        // Update the chat logs
-        setChatLogs((prevLogs) => ({
-          ...prevLogs,
-          [currentChat]: updatedMessages,
-        }));
-        
-        return updatedMessages;
-      });
+      await typeBotMessage(botResponse.text); // Call the typing function
     } catch (error) {
       console.error("Error in bot response:", error);
     }
-    setInput(''); // Clear the input field
+  };
+  
+  const typeBotMessage = async (messageText) => {
+    // Create an empty message for the bot first
+    const botMessage = { sender: 'bot', text: '' };
+    setMessages((prevMessages) => [...prevMessages, botMessage]); // Add the empty bot message
+  
+    for (let i = 0; i < messageText.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 10)); // Typing speed (50ms per letter)
+  
+      setMessages((prevMessages) => {
+        // Create a new array to avoid modifying the original array directly
+        const updatedMessages = [...prevMessages];
+  
+        // Get the last message (the bot message being typed)
+        const lastMessage = { ...updatedMessages[updatedMessages.length - 1] };
+  
+        if (lastMessage.sender === 'bot') {
+          // Append the next character
+          lastMessage.text += messageText[i];
+          updatedMessages[updatedMessages.length - 1] = lastMessage; // Update the last message in the array
+        }
+  
+        return updatedMessages;
+      });
+    }
   };
 
   const generateBotResponse = async (input) => {
@@ -50,10 +68,26 @@ export default function ChatbotPage() {
   };
 
   const startNewChat = () => {
-    const newChatId = `Chat ${Object.keys(chatLogs).length + 1}`;
-    setCurrentChat(newChatId);
-    setMessages([]); // Reset messages for new chat
+    setChatLogs((prevLogs) => {
+      // Save the current messages to chatLogs
+      if (messages.length > 0 && currentChat) {
+        return {
+          ...prevLogs,
+          [currentChat]: messages, // Store current messages under currentChat ID
+        };
+      }
+      return prevLogs;
+    });
+  
+    // Now create the new chat ID and reset the chat window
+    setCurrentChat((prevChatId) => {
+      const newChatId = `Chat ${Object.keys(chatLogs).length + 1}`;
+      setMessages([]); // Clear out messages for the new chat
+      return newChatId;
+    });
   };
+  
+  
 
   const handleSelectChat = (chatId) => {
     setCurrentChat(chatId);
