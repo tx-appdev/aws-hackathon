@@ -38,3 +38,7 @@ Through this project, we gained valuable experience implementing AWS services in
 ### What's Next
 
 To improve on this project further, we plan to use a larger data set to train the LLM model to improve accuracy of responses. We also plan to refactor our code base for the web application from having multiple CSS files to being fully Tailwind, in order to improve performance and increase maintainability. 
+
+### Project Submission
+
+View our project submission [here](https://youtu.be/VZgzP54-tkY).
